@@ -1,69 +1,83 @@
-"""Warehouse Domain Model"""
-
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Dict, Optional
-
-from .product import Product
+from src.domain.product import Product
 
 
-@dataclass
-class Movement:
-    """Bewegungsprotokoll-Eintrag für Lagerbestände"""
+class WarehouseService:
 
-    id: str
-    product_id: str
-    product_name: str
-    quantity_change: int
-    movement_type: str  # z.B. "IN", "OUT", "CORRECTION"
-    reason: Optional[str] = None
-    timestamp: datetime = field(default_factory=datetime.now)
-    performed_by: str = "system"
+    def __init__(self, repository):
+        self.repository = repository
 
 
-class Warehouse:
-    """Verwaltungsklasse für das Lager"""
+    def create_product(self, product_id, name, description, price, category, quantity):
 
-    def __init__(self, name: str):
-        self.name = name
-        self.products: Dict[str, Product] = {}
-        self.movements: list[Movement] = []
+        product = Product(
+            product_id,
+            name,
+            description,
+            price,
+            category,
+            quantity
+        )
 
-    def add_product(self, product: Product) -> None:
-        """Produkt zum Lager hinzufügen"""
-        if product.id in self.products:
-            raise ValueError(f"Produkt mit ID {product.id} existiert bereits")
-        self.products[product.id] = product
+        self.repository.add(product)
 
-    def get_product(self, product_id: str) -> Optional[Product]:
-        """Produkt nach ID abrufen"""
-        return self.products.get(product_id)
+        return product
 
-    def record_movement(self, movement: Movement) -> None:
-        """Lagerbewegung protokollieren"""
-        if movement.product_id not in self.products:
-            raise ValueError(
-                f"Produkt mit ID {movement.product_id} existiert nicht"
-            )
-        self.movements.append(movement)
 
-    def get_total_inventory_value(self) -> float:
-        """Gesamtwert aller Bestände berechnen"""
-        return sum(product.get_total_value() for product in self.products.values())
+    def add_stock(self, product_id, amount):
 
-    def get_inventory_report(self) -> Dict[str, dict]:
-        """
-        Lagerbestandsbericht erstellen
+        product = self.repository.get(product_id)
 
-        Returns:
-            Dictionary mit Produktinformationen
-        """
-        return {
-            product_id: {
-                "name": product.name,
-                "quantity": product.quantity,
-                "price": product.price,
-                "total_value": product.get_total_value(),
-            }
-            for product_id, product in self.products.items()
-        }
+        if product:
+            product.add_stock(amount)
+            self.repository.update(product)
+
+
+    def remove_stock(self, product_id, amount):
+
+        product = self.repository.get(product_id)
+
+        if product:
+            product.remove_stock(amount)
+            self.repository.update(product)
+
+
+    def delete_product(self, product_id):
+        self.repository.delete(product_id)
+
+
+    def get_low_stock_products(self):
+
+        products = self.repository.get_all()
+
+        result = []
+
+        for p in products:
+            if p.is_low_stock():
+                result.append(p)
+
+        return result
+
+
+    def get_total_inventory_value(self):
+
+        products = self.repository.get_all()
+
+        total = 0
+
+        for p in products:
+            total += p.price * p.quantity
+
+        return total
+
+
+    def get_products_by_category(self, category):
+
+        products = self.repository.get_all()
+
+        result = []
+
+        for p in products:
+            if p.category == category:
+                result.append(p)
+
+        return result
