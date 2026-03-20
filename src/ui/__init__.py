@@ -247,34 +247,33 @@ class HauptGuiController(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        base_dir = Path(__file__).resolve().parent
-        uic.loadUi(str(base_dir / "haupt_gui.ui"), self)
+        self.base_dir = Path(__file__).resolve().parent
+        self.main_ui = self.base_dir / "haupt_gui.ui"
 
-        self.lagerbestand_window = None
-        self.lieferung_window = None
-        self.kauf_historie_window = None
+        self._load_main_ui()
 
-        # Buttons in haupt_gui
+    def _load_main_ui(self):
+        uic.loadUi(str(self.main_ui), self)
+
+        # Haupt-Buttons
         self.pushButton.clicked.connect(self.show_lagerbestand)
         self.pushButton_3.clicked.connect(self.show_lieferung)
         self.pushButton_4.clicked.connect(self.show_kauf_historie)
 
-    def _open_child_window(self, ui_filename):
-        base_dir = Path(__file__).resolve().parent
-        child = QMainWindow()
-        uic.loadUi(str(base_dir / ui_filename), child)
-        child.pushButton.clicked.connect(child.close)
-        child.show()
-        return child
+    def _load_sub_ui(self, ui_filename):
+        uic.loadUi(str(self.base_dir / ui_filename), self)
+        back_button = self.findChild(QPushButton, "pushButton")
+        if back_button:
+            back_button.clicked.connect(self._load_main_ui)
 
     def show_lagerbestand(self):
-        self.lagerbestand_window = self._open_child_window("lagerbestand_gui.ui")
+        self._load_sub_ui("lagerbestand_gui.ui")
 
     def show_lieferung(self):
-        self.lieferung_window = self._open_child_window("lieferung_gui.ui")
+        self._load_sub_ui("lieferung_gui.ui")
 
     def show_kauf_historie(self):
-        self.kauf_historie_window = self._open_child_window("kauf_historie_gui.ui")
+        self._load_sub_ui("kauf_historie_gui.ui")
 
 
 def main():
