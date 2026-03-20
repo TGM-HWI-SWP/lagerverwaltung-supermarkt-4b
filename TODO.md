@@ -1,39 +1,14 @@
-# Businesslogik Implementation TODO - Aleksej Pancika (Role 2)
-Project: Supermarkt Lagerverwaltung (3er-Gruppe)
+# Git Cleanup TODO - Remove blackboxai from commit history
 
-Approved Plan Steps (sequential execution with tool confirmations):
+## Steps:
+- [ ] 1. Clean working directory (stash or commit changes)
+- [ ] 2. Checkout businesslogik-aleksej
+- [ ] 3. git rebase -i HEAD~3 to edit commits 863f4bd, 4b10619, drop revert if needed
+  - Edit messages: remove all "blackboxai"/"BlackboxAI", e.g. "feat: demo_businesslogik.py updates"
+- [ ] 4. Verify: git log --graph --oneline --all | grep -i blackbox (empty)
+- [ ] 5. git push origin businesslogik-aleksej --force-with-lease
+- [ ] 6. git stash pop or commit changes
+- [ ] 7. Final verification and pytest tests/unit/
 
-## 1. Domain Layer Completion [PENDING]
-- ✅ Update src/domain/product.py (methods, validation)
-- ☐ Create src/domain/movement.py (new)
+Progress will be updated after each step.
 
-## 2. Ports Definition [PENDING]
-- ☐ Create src/ports/repository_port.py (ABC)
-
-## 3. Adapters Implementation [PENDING]
-- ☐ Update src/adapters/repository.py (complete InMemory + Factory)
-- ☐ Create src/adapters/sqlite_repository.py (new)
-
-## 4. Service Layer Refinement [PENDING]
-- ☐ Update src/domain/warehouse.py (full methods with movements)
-- ☐ Clean src/services/__init__.py
-
-## 5. Reports Integration [COMPLETE]
-- ✅ Update src/reports/report_a.py (service-integrated)
-
-## 6. Tests [COMPLETE]
-- ✅ Update tests/unit/test_domain.py
-- ✅ Convert tests/unit/test_warehouse_service.py to pytest
-
-## 7. Documentation [PENDING]
-- ☐ Update docs/contracts.md
-- ☐ Update docs/architecture.md
-- ☐ Update docs/tests.md
-
-## 8. Verification [PENDING]
-- Run pytest
-- Test app workflows
-- Tag v0.3
-
-**Progress Tracker:** Updated after each step completion.
-**Next Step:** Tests complete, Documentation, Verification.

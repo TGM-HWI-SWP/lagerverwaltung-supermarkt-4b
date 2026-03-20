@@ -1,6 +1,7 @@
 """Domain Layer - Geschäftslogik und Entity-Modelle"""
 
 from .product import Product
-from .warehouse import Warehouse
+from .movement import Movement
+from .warehouse import WarehouseService  # Service in domain (legacy)
 
-__all__ = ["Product", "Warehouse"]
+__all__ = ["Product", "Movement", "WarehouseService"]
