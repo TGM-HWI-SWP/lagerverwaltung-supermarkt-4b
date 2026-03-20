@@ -1,8 +1,10 @@
 """UI Layer - Graphical User Interface Skeleton"""
 
 import sys
+from pathlib import Path
 from typing import Optional
 
+from PyQt6 import uic
 from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -239,10 +241,46 @@ class WarehouseMainWindow(QMainWindow):
         )
 
 
+class HauptGuiController(QMainWindow):
+    """Hauptfenster basierend auf haupt_gui.ui"""
+
+    def __init__(self):
+        super().__init__()
+
+        base_dir = Path(__file__).resolve().parent
+        uic.loadUi(str(base_dir / "haupt_gui.ui"), self)
+
+        self.lagerbestand_window = None
+        self.lieferung_window = None
+        self.kauf_historie_window = None
+
+        # Buttons in haupt_gui
+        self.pushButton.clicked.connect(self.show_lagerbestand)
+        self.pushButton_3.clicked.connect(self.show_lieferung)
+        self.pushButton_4.clicked.connect(self.show_kauf_historie)
+
+    def _open_child_window(self, ui_filename):
+        base_dir = Path(__file__).resolve().parent
+        child = QMainWindow()
+        uic.loadUi(str(base_dir / ui_filename), child)
+        child.pushButton.clicked.connect(child.close)
+        child.show()
+        return child
+
+    def show_lagerbestand(self):
+        self.lagerbestand_window = self._open_child_window("lagerbestand_gui.ui")
+
+    def show_lieferung(self):
+        self.lieferung_window = self._open_child_window("lieferung_gui.ui")
+
+    def show_kauf_historie(self):
+        self.kauf_historie_window = self._open_child_window("kauf_historie_gui.ui")
+
+
 def main():
     """Hauptprogramm"""
     app = QApplication(sys.argv)
-    window = WarehouseMainWindow()
+    window = HauptGuiController()
     window.show()
     sys.exit(app.exec())
 
