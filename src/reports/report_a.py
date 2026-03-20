@@ -1,11 +1,24 @@
-def generate_inventory_report(products):
-    total_value = 0
-    report_lines = []
+from src.services import WarehouseService
 
-    for p in products:
-        value = p.price * p.quantity
-        total_value += value
-        report_lines.append(f"{p.name} → {p.quantity} → {value:.2f} €")
-
-    report_lines.append(f"GESAMTWERT → {total_value:.2f} €")
-    return "\n".join(report_lines)
+def generate_inventory_report(service: WarehouseService) -> str:
+    """
+    Report A: Lagerbestandsuebersicht (Pflicht fuer 3er-Gruppe).
+    """
+    products = service.get_all_products()
+    low_stock = service.get_low_stock_products()
+    
+    report = "=== LAGERBESTANDSREPORT A ===\\n\\n"
+    report += f"Gesamtwert: {service.get_total_inventory_value():.2f} €\\n"
+    report += f"Warnbestände: {len(low_stock)}\\n\\n"
+    
+    report += "Produkte:\\n"
+    for pid, p in products.items():
+        mark = "[LOW]" if p.is_low_stock() else "[OK] "
+        report += f"{mark} {p.name} | {p.quantity} Stk | {p.get_total_value():.2f} € ({p.category})\\n"
+    
+    if low_stock:
+        report += "\\nAchtung - Nachbestellen:\\n"
+        for p in low_stock:
+            report += f"  {p.name} ({p.quantity}/{p.min_stock})\\n"
+    
+    return report
