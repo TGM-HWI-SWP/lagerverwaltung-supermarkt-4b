@@ -62,6 +62,7 @@ cd projekt
 
 # 2. Virtuelle Umgebung erstellen (optional, aber empfohlen)
 python -m venv venv
+#Fabian1234
 
 # Windows:
 venv\Scripts\activate
