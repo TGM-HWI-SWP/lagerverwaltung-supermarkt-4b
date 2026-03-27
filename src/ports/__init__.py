@@ -7,6 +7,8 @@ from ..domain.product import Product
 from ..domain.warehouse import Movement
 
 
+
+
 class RepositoryPort(ABC):
     """Port für Datenpersistenz"""
 
