@@ -250,21 +250,62 @@ class HauptGuiController(QMainWindow):
         self.base_dir = Path(__file__).resolve().parent
         self.main_ui = self.base_dir / "haupt_gui.ui"
 
+        self.main_window = None
+        self.sub_windows = {}
+
         self._load_main_ui()
 
     def _load_main_ui(self):
-        uic.loadUi(str(self.main_ui), self)
+        try:
+            if self.main_window:
+                self.main_window.close()
+            self.main_window = QMainWindow()
+            uic.loadUi(str(self.main_ui), self.main_window)
 
-        # Haupt-Buttons
-        self.pushButton.clicked.connect(self.show_lagerbestand)
-        self.pushButton_3.clicked.connect(self.show_lieferung)
-        self.pushButton_4.clicked.connect(self.show_kauf_historie)
+            # Haupt-Buttons
+            push_button = self.main_window.findChild(QPushButton, "pushButton")
+            push_button_3 = self.main_window.findChild(QPushButton, "pushButton_3")
+            push_button_4 = self.main_window.findChild(QPushButton, "pushButton_4")
+
+            if push_button:
+                push_button.clicked.connect(self.show_lagerbestand)
+            if push_button_3:
+                push_button_3.clicked.connect(self.show_lieferung)
+            if push_button_4:
+                push_button_4.clicked.connect(self.show_kauf_historie)
+
+            self.main_window.show()
+        except Exception as e:
+            print(f"Error loading main UI: {e}")
+            import traceback
+            traceback.print_exc()
 
     def _load_sub_ui(self, ui_filename):
-        uic.loadUi(str(self.base_dir / ui_filename), self)
-        back_button = self.findChild(QPushButton, "pushButton")
-        if back_button:
-            back_button.clicked.connect(self._load_main_ui)
+        try:
+            if ui_filename in self.sub_windows:
+                self.sub_windows[ui_filename].show()
+            else:
+                window = QMainWindow()
+                uic.loadUi(str(self.base_dir / ui_filename), window)
+                back_button = window.findChild(QPushButton, "pushButton")
+                if back_button:
+                    back_button.clicked.connect(lambda: self._back_to_main(window))
+                else:
+                    print(f"Warning: No back button found in {ui_filename}")
+                self.sub_windows[ui_filename] = window
+                window.show()
+
+            if self.main_window:
+                self.main_window.hide()
+        except Exception as e:
+            print(f"Error loading UI {ui_filename}: {e}")
+            import traceback
+            traceback.print_exc()
+
+    def _back_to_main(self, sub_window):
+        sub_window.hide()
+        if self.main_window:
+            self.main_window.show()
 
     def show_lagerbestand(self):
         self._load_sub_ui("lagerbestand_gui.ui")
@@ -278,10 +319,15 @@ class HauptGuiController(QMainWindow):
 
 def main():
     """Hauptprogramm"""
-    app = QApplication(sys.argv)
-    window = HauptGuiController()
-    window.show()
-    sys.exit(app.exec())
+    try:
+        app = QApplication(sys.argv)
+        window = HauptGuiController()
+        window.show()
+        sys.exit(app.exec())
+    except Exception as e:
+        print(f"Error starting GUI: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
