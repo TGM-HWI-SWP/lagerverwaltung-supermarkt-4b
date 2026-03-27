@@ -1,69 +1,90 @@
-"""Warehouse Domain Model"""
+from typing import Dict, List, Optional
+from src.ports.repository_port import RepositoryPort
+from src.domain.product import Product
+from src.domain.movement import Movement
 
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Dict, Optional
+class WarehouseService:
+    """Core business logic for supermarket warehouse management."""
 
-from .product import Product
+    def __init__(self, repository: RepositoryPort):
+        self.repository: RepositoryPort = repository
 
+    def create_product(
+        self,
+        product_id: str,
+        name: str,
+        description: str,
+        price: float,
+        category: str,
+        quantity: int = 0,
+        performed_by: str = "system"
+    ) -> Product:
+        """Create new product with initial stock movement."""
+        product = Product(product_id, name, description, price, category, quantity)
+        self.repository.add(product)
+        return product
 
-@dataclass
-class Movement:
-    """Bewegungsprotokoll-Eintrag für Lagerbestände"""
+    def add_stock(
+        self,
+        product_id: str,
+        quantity: int,
+        reason: str = "Stock replenishment",
+        performed_by: str = "system"
+    ) -> Movement:
+        """Add stock and log movement."""
+        product = self.repository.get(product_id)
+        if not product:
+            raise ValueError(f"Product {product_id} not found")
+        
+        movement = product.update_quantity(quantity, reason, performed_by)
+        self.repository.save_movement(movement)  # No update needed, product updated in place
+        return movement
 
-    id: str
-    product_id: str
-    product_name: str
-    quantity_change: int
-    movement_type: str  # z.B. "IN", "OUT", "CORRECTION"
-    reason: Optional[str] = None
-    timestamp: datetime = field(default_factory=datetime.now)
-    performed_by: str = "system"
+    def remove_stock(
+        self,
+        product_id: str,
+        quantity: int,
+        reason: str = "Sale",
+        performed_by: str = "system"
+    ) -> Movement:
+        """Remove stock and log movement."""
+        product = self.repository.get(product_id)
+        if not product:
+            raise ValueError(f"Product {product_id} not found")
+        
+        movement = product.update_quantity(-quantity, reason, performed_by)
+        self.repository.save_movement(movement)
+        return movement
 
-
-class Warehouse:
-    """Verwaltungsklasse für das Lager"""
-
-    def __init__(self, name: str):
-        self.name = name
-        self.products: Dict[str, Product] = {}
-        self.movements: list[Movement] = []
-
-    def add_product(self, product: Product) -> None:
-        """Produkt zum Lager hinzufügen"""
-        if product.id in self.products:
-            raise ValueError(f"Produkt mit ID {product.id} existiert bereits")
-        self.products[product.id] = product
+    def delete_product(self, product_id: str) -> None:
+        """Delete product."""
+        self.repository.delete(product_id)
 
     def get_product(self, product_id: str) -> Optional[Product]:
-        """Produkt nach ID abrufen"""
-        return self.products.get(product_id)
+        """Get single product."""
+        return self.repository.get(product_id)
 
-    def record_movement(self, movement: Movement) -> None:
-        """Lagerbewegung protokollieren"""
-        if movement.product_id not in self.products:
-            raise ValueError(
-                f"Produkt mit ID {movement.product_id} existiert nicht"
-            )
-        self.movements.append(movement)
+    def get_all_products(self) -> Dict[str, Product]:
+        """Get all products."""
+        return self.repository.get_all()
+
+    def get_low_stock_products(self) -> List[Product]:
+        """Get products below min_stock."""
+        products = list(self.repository.get_all().values())
+        return [p for p in products if p.is_low_stock()]
 
     def get_total_inventory_value(self) -> float:
-        """Gesamtwert aller Bestände berechnen"""
-        return sum(product.get_total_value() for product in self.products.values())
+        """Total value of all inventory."""
+        total = 0.0
+        for product in self.repository.get_all().values():
+            total += product.get_total_value()
+        return total
 
-    def get_inventory_report(self) -> Dict[str, dict]:
-        """
-        Lagerbestandsbericht erstellen
+    def get_products_by_category(self, category: str) -> List[Product]:
+        """Filter products by category."""
+        products = list(self.repository.get_all().values())
+        return [p for p in products if p.category == category]
 
-        Returns:
-            Dictionary mit Produktinformationen
-        """
-        return {
-            product_id: {
-                "name": product.name,
-                "quantity": product.quantity,
-                "price": product.price,
-                "total_value": product.get_total_value(),
-            }
-            for product_id, product in self.products.items()
-        }
+    def get_movements(self) -> List[Movement]:
+        """Get all stock movements."""
+        return self.repository.get_movements()
