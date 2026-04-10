@@ -3,7 +3,7 @@ import json
 from typing import Dict, List, Optional
 from datetime import datetime
 from pathlib import Path
-from src.ports.repository_port import RepositoryPort
+from src.ports.ports import RepositoryPort
 from src.domain.product import Product
 from src.domain.movement import Movement
 
