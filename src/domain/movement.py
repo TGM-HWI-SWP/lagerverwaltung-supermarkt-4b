@@ -6,14 +6,14 @@ import uuid
 @dataclass
 class Movement:
     """Immutable Lagerbewegung for auditing."""
-    id: str = None
     product_id: str
     product_name: str
     quantity_change: int  # positive for IN, negative for OUT
     movement_type: str  # "IN", "OUT", "CORRECTION", "INITIAL"
+    performed_by: str = "system"
     reason: Optional[str] = None
-    timestamp: datetime = None
-    performed_by: Optional[str] = "system"
+    timestamp: Optional[datetime] = None
+    id: Optional[str] = None
 
     def __post_init__(self):
         if self.id is None:

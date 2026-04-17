@@ -1,7 +1,8 @@
+from src.adapters.repository import RepositoryFactory
+
 class WarehouseService:
-    def __init__(self, repository_type="memory"):
-        self.repository = RepositoryFactory.create_repository(repository_type)
-        self.products = {}  # nur für Testzwecke
+    def __init__(self, repo):
+        self.repository = repo
 
     def create_product(self, product_id, name, description, price, category, initial_quantity):
         self.products[product_id] = {
