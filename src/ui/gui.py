@@ -263,14 +263,19 @@ class HauptGuiController(QMainWindow):
     def _load_main_ui(self):
         try:
             uic.loadUi(str(self.main_ui), self)
+            self.setWindowTitle("Supermarkt Lagerverwaltung")
+            self._apply_styles()
 
             # Haupt-Buttons
             push_button = self.findChild(QPushButton, "pushButton")
+            push_button_2 = self.findChild(QPushButton, "pushButton_2")
             push_button_3 = self.findChild(QPushButton, "pushButton_3")
             push_button_4 = self.findChild(QPushButton, "pushButton_4")
 
             if push_button:
                 push_button.clicked.connect(self.show_lagerbestand)
+            if push_button_2:
+                push_button_2.clicked.connect(self.show_random_kaeufe)
             if push_button_3:
                 push_button_3.clicked.connect(self.show_lieferung)
             if push_button_4:
@@ -280,6 +285,24 @@ class HauptGuiController(QMainWindow):
             import traceback
             traceback.print_exc()
 
+    @staticmethod
+    def get_app_stylesheet():
+        return """
+            QMainWindow, QWidget { background-color: #f4f7fb; color: #000000; }
+            QWidget#centralwidget { background-color: #f4f7fb; }
+            QFrame { background-color: #ffffff; border: 1px solid #dbe2ee; border-radius: 16px; }
+            QLabel, QLineEdit, QTextEdit, QSpinBox, QDoubleSpinBox, QComboBox, QAbstractItemView, QHeaderView::section { color: #000000; }
+            QPushButton { background-color: #ffffff; color: #000000; border: 1px solid #dbe2ee; border-radius: 16px; padding: 12px 16px; font-size: 14px; }
+            QPushButton:hover { background-color: #edf2fb; }
+            QPushButton#backButton { background-color: #ffffff; color: #000000; border: 1px solid #d0d7e4; }
+            QPushButton#backButton:hover { background-color: #edf2fb; color: #000000; }
+            QTableView, QTableWidget { color: #000000; background-color: #ffffff; alternate-background-color: #f7f9fc; gridline-color: #e1e8f0; selection-background-color: #d0e4ff; selection-color: #000000; }
+            QScrollArea { border: none; background: transparent; }
+            """
+
+    def _apply_styles(self):
+        self.setStyleSheet(self.get_app_stylesheet())
+
     def _load_sub_ui(self, ui_filename):
         try:
             if ui_filename in self.sub_windows:
@@ -287,7 +310,8 @@ class HauptGuiController(QMainWindow):
             else:
                 window = QMainWindow()
                 uic.loadUi(str(self.base_dir / ui_filename), window)
-                back_button = window.findChild(QPushButton, "pushButton")
+                window.setStyleSheet(self.styleSheet())
+                back_button = window.findChild(QPushButton, "backButton")
                 if back_button:
                     back_button.clicked.connect(lambda: self._back_to_main(window))
                 else:
@@ -308,8 +332,14 @@ class HauptGuiController(QMainWindow):
     def show_lagerbestand(self):
         self._load_sub_ui("lagerbestand_gui.ui")
 
+    def show_rechnung(self):
+        self._load_sub_ui("rechnung_gui.ui")
+
     def show_lieferung(self):
         self._load_sub_ui("lieferung_gui.ui")
+
+    def show_random_kaeufe(self):
+        QMessageBox.information(self, "Random Käufe", "Diese Funktion wird später ergänzt.")
 
     def show_kauf_historie(self):
         self._load_sub_ui("kauf_historie_gui.ui")
@@ -319,6 +349,7 @@ def main():
     """Hauptprogramm"""
     try:
         app = QApplication(sys.argv)
+        app.setStyleSheet(HauptGuiController.get_app_stylesheet())
         window = HauptGuiController()
         window.show()
         sys.exit(app.exec())
