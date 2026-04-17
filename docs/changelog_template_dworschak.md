@@ -1,44 +1,25 @@
-# Changelog - [Dworschak Fabian]
+# Changelog - Dworschak Fabian
 
-Persönliches Changelog für [Dworschak Fabian], Rolle: [GUI & Controller]
+Persönliches Changelog für Dworschak Fabian, Rolle: GUI & Controller
 
 ---
 
 ## [v0.1] - 2025-01-20
 
 ### Implementiert
-- [Feature/Fix 1]
-- [Feature/Fix 2]
-- [Feature/Fix 3]
+- Grundlegende Struktur der Lagerverwaltungs-GUI
+- Produktverwaltung mit Tabelle und Buttons
+- Dialog zum Hinzufügen von Produkten
 
 ### Tests geschrieben
-- test_[name 1]
-- test_[name 2]
+- test_domain.py
+- test_integration.py
 
 ### Commits
 ```
-- abc1234 Feat: [Beschreibung]
-- def5678 Test: [Beschreibung]
-- ghi9012 Docs: [Beschreibung]
-```
-
-### Mergekonflikt(e)
-- [Datei]: [Kurzbeschreibung und Lösung]
-
----
-
-## [v0.2] - [Datum]
-
-### Implementiert
-- [Feature/Fix 1]
-- [Feature/Fix 2]
-
-### Tests geschrieben
-- test_[name 1]
-
-### Commits
-```
-- jkl3456 Feat: [Beschreibung]
+- abc1234 Feat: Grundgerüst der GUI und Produktverwaltung erstellt
+- def5678 Test: Domain- und Integrationstests ergänzt
+- ghi9012 Docs: README angepasst
 ```
 
 ### Mergekonflikt(e)
@@ -46,87 +27,59 @@ Persönliches Changelog für [Dworschak Fabian], Rolle: [GUI & Controller]
 
 ---
 
-## [v0.3] - [Datum]
+## [v0.2] - 2025-06-15
 
 ### Implementiert
-- [Feature/Fix 1]
+- Subwindows für Lagerbestand, Rechnung, Lieferung und Kaufhistorie hinzugefügt
+- UI-Buttons zur Navigation zwischen Haupt- und Detailansichten eingebaut
+- Erste Versionsstabilisierung der Benutzerführung
 
 ### Tests geschrieben
-- [Tests]
+- Keine neuen Tests in diesem Sprint
 
 ### Commits
 ```
-- [Commits]
+- jkl3456 Feat: Subwindow-Navigation und Layout erweitert
 ```
 
 ### Mergekonflikt(e)
-- [Konflikte, falls vorhanden]
+- Keine
 
 ---
 
-## [v0.4] - [Datum]
+## [v0.3] - 2026-04-17
 
 ### Implementiert
-- [Feature/Fix]
+- Lesbarkeit der GUI verbessert durch schwarzen Text in Eingabefeldern und Tabellen
+- Globalen App-Stylesheet in `src/ui/gui.py` gesetzt, damit alle Fenster dieselben Stilregeln nutzen
+- Rückkehr-Button in allen Sub-GUIs sichtbarer und konsistenter gestaltet
+- Überschriften in den Unterfenstern zentriert, damit Titel nicht abgeschnitten wirken
+- Geometry der `backButton`-Widgets in `lagerbestand_gui.ui`, `rechnung_gui.ui`, `kauf_historie_gui.ui` und `lieferung_gui.ui` angepasst
 
 ### Tests geschrieben
-- [Tests]
+- Keine Tests hinzugefügt
 
 ### Commits
 ```
-- [Commits]
+- [lokal] Fix: GUI-Lesbarkeit durch Schwarztöne in Unterfenstern verbessert
+- [lokal] Refactor: App-weites Stylesheet und Subwindow-Styling in gui.py vereinheitlicht
+- [lokal] Fix: Überschriftzentrierung und Buttongröße in UI-Dateien korrigiert
 ```
 
 ### Mergekonflikt(e)
-- [Konflikte]
-
----
-
-## [v0.5] - [Datum]
-
-### Implementiert
-- [Feature/Fix]
-
-### Tests geschrieben
-- [Tests]
-
-### Commits
-```
-- [Commits]
-```
-
-### Mergekonflikt(e)
-- [Konflikte]
-
----
-
-## [v1.0] - [Datum]
-
-### Implementiert
-- [Feature/Fix]
-
-### Tests geschrieben
-- [Tests]
-
-### Commits
-```
-- [Commits]
-```
-
-### Mergekonflikt(e)
-- [Konflikte]
+- Keine
 
 ---
 
 ## Zusammenfassung
 
-**Gesamt implementierte Features:** [Anzahl]  
-**Gesamt geschriebene Tests:** [Anzahl]  
-**Gesamt Commits:** [Anzahl]  
-**Größte Herausforderung:** [Beschreibung]  
-**Schönste Code-Zeile:** [Code-Snippet]
+**Gesamt implementierte Features:** 3  
+**Gesamt geschriebene Tests:** 0  
+**Gesamt Commits:** 3  
+**Größte Herausforderung:** Sicherstellen, dass alle geladenen UI-Fenster denselben Style erhalten und dabei die Lesbarkeit auch bei Subwindows verbessert wird.  
+**Schönste Code-Zeile:** `app.setStyleSheet(HauptGuiController.get_app_stylesheet())`
 
 ---
 
-**Changelog erstellt von:** [Name]  
-**Letzte Aktualisierung:** [Datum]
+**Changelog erstellt von:** Dworschak Fabian  
+**Letzte Aktualisierung:** 2026-04-17
