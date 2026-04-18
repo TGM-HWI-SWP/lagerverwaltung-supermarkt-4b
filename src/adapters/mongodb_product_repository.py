@@ -46,18 +46,23 @@ class MongoDBProductRepository:
         if doc is None:
             return None
 
-        return Product(
-            id=doc["id"],
-            name=doc["name"],
-            description=doc["description"],
-            price=doc["price"],
-            quantity=doc["quantity"],
-            sku=doc.get("sku", ""),
-            category=doc.get("category", ""),
-            created_at=doc["created_at"],
-            updated_at=doc["updated_at"],
-            notes=doc.get("notes")
+        product = Product(
+            doc["id"],
+            doc["name"],
+            doc["description"],
+            doc["price"],
+            doc.get("category", ""),
+            doc["quantity"],
+            0
         )
+
+        product.id = doc["id"]
+        product.sku = doc.get("sku", "")
+        product.notes = doc.get("notes")
+        product.created_at = doc["created_at"]
+        product.updated_at = doc["updated_at"]
+
+        return product
 
     def load_all_products(self) -> list[Product]:
         """
@@ -82,20 +87,22 @@ class MongoDBProductRepository:
             if "updated_at" not in doc:
                 continue
 
-            products.append(
-                Product(
-                    id=doc["id"],
-                    name=doc["name"],
-                    description=doc["description"],
-                    price=doc["price"],
-                    quantity=doc["quantity"],
-                    sku=doc.get("sku", ""),
-                    category=doc.get("category", ""),
-                    created_at=doc["created_at"],
-                    updated_at=doc["updated_at"],
-                    notes=doc.get("notes")
-                )
+            product = Product(
+                doc["id"],
+                doc["name"],
+                doc["description"],
+                doc["price"],
+                doc.get("category", ""),
+                doc["quantity"],
+                0
             )
 
-        return products
+            product.id = doc["id"]
+            product.sku = doc.get("sku", "")
+            product.notes = doc.get("notes")
+            product.created_at = doc["created_at"]
+            product.updated_at = doc["updated_at"]
 
+            products.append(product)
+
+        return products

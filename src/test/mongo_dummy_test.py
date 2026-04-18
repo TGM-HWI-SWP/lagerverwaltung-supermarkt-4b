@@ -1,7 +1,8 @@
 from src.adapters.mongodb_product_repository import MongoDBProductRepository
 from src.domain.product import Product
 
-MONGO_URI = "mongodb+srv://rajkovicgabriel_db_user:Gabi1234.@cluster0.jge9ku6.mongodb.net/?appName=Cluster0"
+MONGO_URI = "mongodb+srv://rajkovicgabriel_db_user:GR12345GR@cluster0.jge9ku6.mongodb.net/?appName=Cluster0"
+
 
 
 def zeige_alle_produkte(repo: MongoDBProductRepository) -> None:
