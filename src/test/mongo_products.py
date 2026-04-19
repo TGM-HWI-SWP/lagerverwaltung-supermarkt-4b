@@ -43,12 +43,36 @@ products = [
     make_product("P017", "Brot", "Weißbrot", 1.9, "Backwaren", 100, 10, "SKU-018", "Tagesfrisch"),
     make_product("P018", "Semmel", "Frische Semmel", 0.5, "Backwaren", 220, 20, "SKU-019", "Knusprig"),
     make_product("P019", "Croissant", "Buttercroissant", 1.1, "Backwaren", 85, 10, "SKU-020", "Französische Art"),
-
     make_product("P020", "Wasser", "Mineralwasser 1.5L", 0.7, "Getränke", 300, 30, "SKU-021", "Still"),
     make_product("P021", "Cola", "Cola 1L", 1.6, "Getränke", 180, 20, "SKU-022", "Zuckerhaltig"),
+
+    make_product("P022", "Erdbeeren", "Frische Erdbeeren", 3.2, "Obst", 70, 8, "SKU-023", "Saisonal"),
+    make_product("P023", "Ananas", "Süße Ananas", 2.9, "Obst", 60, 6, "SKU-024", "Exotisch"),
+    make_product("P024", "Mango", "Reife Mango", 2.5, "Obst", 65, 7, "SKU-025", "Import"),
+    make_product("P025", "Brokkoli", "Frischer Brokkoli", 1.7, "Gemüse", 90, 10, "SKU-026", "Grün"),
+    make_product("P026", "Spinat", "Blattspinat", 1.4, "Gemüse", 85, 10, "SKU-027", "Bio"),
+
+    make_product("P027", "Kartoffel", "Speisekartoffel", 0.6, "Gemüse", 300, 25, "SKU-028", "Regional"),
+    make_product("P028", "Champignons", "Frische Champignons", 2.2, "Gemüse", 75, 8, "SKU-029", "Zuchtware"),
+    make_product("P029", "Eier", "10er Pack Eier", 2.8, "Milchprodukte", 120, 15, "SKU-030", "Freilandhaltung"),
+    make_product("P030", "Mozzarella", "Mozzarella 125g", 1.3, "Milchprodukte", 95, 10, "SKU-031", "Italienisch"),
+    make_product("P031", "Quark", "Magerquark 500g", 1.1, "Milchprodukte", 110, 12, "SKU-032", "Proteinreich"),
+
+    make_product("P032", "Toastbrot", "Toastbrot 500g", 1.5, "Backwaren", 130, 15, "SKU-033", "Weich"),
+    make_product("P033", "Baguette", "Frisches Baguette", 1.2, "Backwaren", 100, 10, "SKU-034", "Knusprig"),
+    make_product("P034", "Donut", "Zucker Donut", 0.9, "Backwaren", 140, 15, "SKU-035", "Süß"),
+    make_product("P035", "Apfelsaft", "Apfelsaft 1L", 1.8, "Getränke", 160, 20, "SKU-036", "Naturtrüb"),
+    make_product("P036", "Orangensaft", "Orangensaft 1L", 2.0, "Getränke", 150, 20, "SKU-037", "Fruchtig"),
+
+    make_product("P037", "Eistee", "Pfirsich Eistee 1.5L", 1.6, "Getränke", 170, 20, "SKU-038", "Erfrischend"),
+    make_product("P038", "Kaffee", "Gemahlener Kaffee 500g", 4.5, "Getränke", 80, 10, "SKU-039", "Stark"),
+    make_product("P039", "Tee", "Schwarzer Tee 20 Beutel", 2.2, "Getränke", 90, 10, "SKU-040", "Aromatisch"),
+    make_product("P040", "Schokolade", "Vollmilchschokolade", 1.3, "Süßwaren", 200, 20, "SKU-041", "Klassisch"),
+    make_product("P041", "Kekse", "Butterkekse 200g", 1.7, "Süßwaren", 180, 20, "SKU-042", "Knusprig"),
 ]
+
 
 for product in products:
     repo.save_product(product)
 
-print("20 weitere Produkte gespeichert.")
+print("Weitere Produkte gespeichert.")
