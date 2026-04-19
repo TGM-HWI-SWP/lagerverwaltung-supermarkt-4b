@@ -93,6 +93,30 @@ products = [
     make_product("P059", "Vollkornbrot", "Vollkornbrot 500g", 2.2, "Backwaren", 90, 10, "SKU-059", "Ballaststoffreich"),
     make_product("P060", "Limonade", "Zitronenlimonade 1.5L", 1.5, "Getränke", 140, 15, "SKU-060", "Spritzig"),
     make_product("P061", "Energydrink", "Energydrink 250ml", 1.9, "Getränke", 110, 12, "SKU-061", "Koffeinhaltig"),
+
+    make_product("P062", "Granatapfel", "Frischer Granatapfel", 2.7, "Obst", 60, 6, "SKU-062", "Exotisch"),
+    make_product("P063", "Blaubeeren", "Frische Blaubeeren", 3.4, "Obst", 70, 8, "SKU-063", "Antioxidantien"),
+    make_product("P064", "Himbeeren", "Saftige Himbeeren", 3.6, "Obst", 65, 7, "SKU-064", "Empfindlich"),
+    make_product("P065", "Melone", "Wassermelone", 4.2, "Obst", 40, 5, "SKU-065", "Sommerfrucht"),
+    make_product("P066", "Kokosnuss", "Frische Kokosnuss", 3.0, "Obst", 50, 6, "SKU-066", "Hartschale"),
+
+    make_product("P067", "Rucola", "Frischer Rucola", 1.6, "Gemüse", 80, 8, "SKU-067", "Würzig"),
+    make_product("P068", "Radieschen", "Rote Radieschen", 1.2, "Gemüse", 90, 10, "SKU-068", "Scharf"),
+    make_product("P069", "Mais", "Zuckermais", 1.9, "Gemüse", 70, 8, "SKU-069", "Süßlich"),
+    make_product("P070", "Erbsen", "Grüne Erbsen", 1.5, "Gemüse", 85, 9, "SKU-070", "Frisch"),
+    make_product("P071", "Grünkohl", "Frischer Grünkohl", 2.1, "Gemüse", 60, 7, "SKU-071", "Wintergemüse"),
+
+    make_product("P072", "Ricotta", "Ricotta Käse 250g", 2.2, "Milchprodukte", 75, 8, "SKU-072", "Italienisch"),
+    make_product("P073", "Mascarpone", "Mascarpone 250g", 2.8, "Milchprodukte", 65, 7, "SKU-073", "Dessert"),
+    make_product("P074", "Schafskäse", "Feta Käse", 3.5, "Milchprodukte", 70, 8, "SKU-074", "Salzig"),
+    make_product("P075", "Trinkjoghurt", "Erdbeer Trinkjoghurt", 1.3, "Milchprodukte", 90, 10, "SKU-075", "Flüssig"),
+    make_product("P076", "Kondensmilch", "Kondensmilch Dose", 1.9, "Milchprodukte", 80, 9, "SKU-076", "Konzentriert"),
+
+    make_product("P077", "Strudel", "Apfelstrudel", 2.5, "Backwaren", 70, 8, "SKU-077", "Süß"),
+    make_product("P078", "Krapfen", "Marillenkrapfen", 1.6, "Backwaren", 100, 12, "SKU-078", "Gefüllt"),
+    make_product("P079", "Ciabatta", "Ciabatta Brot", 2.1, "Backwaren", 85, 10, "SKU-079", "Italienisch"),
+    make_product("P080", "Mineralwasser Sprudel", "Mineralwasser 1.5L Sprudel", 0.8, "Getränke", 200, 20, "SKU-080", "Spritzig"),
+    make_product("P081", "Proteinshake", "Schoko Proteinshake 500ml", 2.9, "Getränke", 95, 10, "SKU-081", "Fitness"),
 ]
 
 
