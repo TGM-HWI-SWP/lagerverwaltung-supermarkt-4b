@@ -1,10 +1,10 @@
-from pymongo import MongoClient
 from src.domain.product import Product
+from pymongo import MongoClient
 
 
 class MongoDBProductRepository:
     """
-    MongoDB-Adapter für die Product-Objekte.
+    MongoDB-Adapter für Product-Objekte.
     Speichert, lädt und löscht Produkte in MongoDB.
     """
 
@@ -53,14 +53,15 @@ class MongoDBProductRepository:
             doc["price"],
             doc.get("category", ""),
             doc["quantity"],
-            0
+            doc.get("min_stock", 0)
         )
 
         product.id = doc["id"]
+        product.product_id = doc["id"]
         product.sku = doc.get("sku", "")
-        product.notes = doc.get("notes")
-        product.created_at = doc["created_at"]
-        product.updated_at = doc["updated_at"]
+        product.notes = doc.get("notes", "")
+        product.created_at = doc.get("created_at")
+        product.updated_at = doc.get("updated_at")
 
         return product
 
@@ -94,14 +95,15 @@ class MongoDBProductRepository:
                 doc["price"],
                 doc.get("category", ""),
                 doc["quantity"],
-                0
+                doc.get("min_stock", 0)
             )
 
             product.id = doc["id"]
+            product.product_id = doc["id"]
             product.sku = doc.get("sku", "")
-            product.notes = doc.get("notes")
-            product.created_at = doc["created_at"]
-            product.updated_at = doc["updated_at"]
+            product.notes = doc.get("notes", "")
+            product.created_at = doc.get("created_at")
+            product.updated_at = doc.get("updated_at")
 
             products.append(product)
 

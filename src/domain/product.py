@@ -1,7 +1,6 @@
-from typing import Optional
-import uuid
 from datetime import datetime
 from src.domain.movement import Movement
+
 
 class Product:
     """Core domain entity for products in supermarket warehouse."""
@@ -22,12 +21,17 @@ class Product:
             raise ValueError("Initial quantity cannot be negative")
 
         self.product_id = product_id
+        self.id = product_id  # Alias für bestehenden Code
         self.name = name
         self.description = description
-        self.price: float = price
+        self.price = price
         self.category = category
-        self.quantity: int = quantity
-        self.min_stock: int = min_stock
+        self.quantity = quantity
+        self.min_stock = min_stock
+
+        # Zusatzattribute für MongoDB / Tests
+        self.sku = ""
+        self.notes = ""
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
@@ -65,4 +69,7 @@ class Product:
         self.updated_at = datetime.now()
 
     def __repr__(self) -> str:
-        return f"Product(id={self.product_id}, name={self.name}, qty={self.quantity}, price={self.price:.2f}, cat={self.category})"
+        return (
+            f"Product(id={self.id}, name={self.name}, qty={self.quantity}, "
+            f"price={self.price:.2f}, cat={self.category})"
+        )

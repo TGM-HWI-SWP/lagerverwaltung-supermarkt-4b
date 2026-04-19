@@ -1,19 +1,21 @@
-from src.adapters.mongodb_product_repository import MongoDBProductRepository
+from datetime import datetime
 from src.domain.product import Product
+from src.adapters.mongodb_product_repository import MongoDBProductRepository
 
 MONGO_URI = "mongodb+srv://rajkovicgabriel_db_user:GR12345GR@cluster0.jge9ku6.mongodb.net/?appName=Cluster0"
 
+repo = MongoDBProductRepository(MONGO_URI)
 
 
-def zeige_alle_produkte(repo: MongoDBProductRepository) -> None:
-    products = repo.load_all_products()
+def produkte_anzeigen(repo: MongoDBProductRepository) -> None:
+    produkte = repo.load_all_products()
 
-    if not products:
-        print("\nKeine Produkte gefunden.\n")
+    if not produkte:
+        print("Keine Produkte gefunden.")
         return
 
-    print("\n--- ALLE PRODUKTE ---")
-    for product in products:
+    print("\n=== PRODUKTE ===")
+    for product in produkte:
         print(f"ID: {product.id}")
         print(f"Name: {product.name}")
         print(f"Beschreibung: {product.description}")
@@ -23,16 +25,14 @@ def zeige_alle_produkte(repo: MongoDBProductRepository) -> None:
         print(f"Kategorie: {product.category}")
         print(f"Notizen: {product.notes}")
         print("-" * 30)
-    print()
 
 
 def produkt_aendern(repo: MongoDBProductRepository) -> None:
-    product_id = input("Welche Produkt-ID willst du ändern? ").strip()
-
-    product = repo.load_product_by_id(product_id)
+    produkt_id = input("Welche Produkt-ID willst du ändern? ").strip()
+    product = repo.load_product_by_id(produkt_id)
 
     if product is None:
-        print("\nProdukt nicht gefunden.\n")
+        print("Produkt nicht gefunden.")
         return
 
     print("\nAktuelle Daten:")
@@ -44,7 +44,6 @@ def produkt_aendern(repo: MongoDBProductRepository) -> None:
     print(f"SKU: {product.sku}")
     print(f"Kategorie: {product.category}")
     print(f"Notizen: {product.notes}")
-    print()
 
     neuer_name = input(f"Neuer Name [{product.name}]: ").strip()
     neue_beschreibung = input(f"Neue Beschreibung [{product.description}]: ").strip()
@@ -55,27 +54,29 @@ def produkt_aendern(repo: MongoDBProductRepository) -> None:
     neue_notizen = input(f"Neue Notizen [{product.notes}]: ").strip()
 
     aktualisiertes_produkt = Product(
-        id=product.id,
-        name=neuer_name if neuer_name else product.name,
-        description=neue_beschreibung if neue_beschreibung else product.description,
-        price=float(neuer_preis) if neuer_preis else product.price,
-        quantity=int(neue_menge) if neue_menge else product.quantity,
-        sku=neue_sku if neue_sku else product.sku,
-        category=neue_kategorie if neue_kategorie else product.category,
-        created_at=product.created_at,
-        updated_at=product.updated_at,
-        notes=neue_notizen if neue_notizen else product.notes,
+        product.id,
+        neuer_name if neuer_name else product.name,
+        neue_beschreibung if neue_beschreibung else product.description,
+        float(neuer_preis) if neuer_preis else product.price,
+        neue_kategorie if neue_kategorie else product.category,
+        int(neue_menge) if neue_menge else product.quantity,
+        product.min_stock
     )
 
+    aktualisiertes_produkt.id = product.id
+    aktualisiertes_produkt.product_id = product.id
+    aktualisiertes_produkt.sku = neue_sku if neue_sku else product.sku
+    aktualisiertes_produkt.notes = neue_notizen if neue_notizen else product.notes
+    aktualisiertes_produkt.created_at = product.created_at
+    aktualisiertes_produkt.updated_at = datetime.now()
+
     repo.save_product(aktualisiertes_produkt)
-    print("\nProdukt erfolgreich geändert.\n")
+    print("Produkt erfolgreich aktualisiert.")
 
 
 def main() -> None:
-    repo = MongoDBProductRepository(MONGO_URI)
-
     while True:
-        print("=== MONGO TEST MENÜ ===")
+        print("\n=== MONGO TEST MENÜ ===")
         print("1 - Produkte anzeigen")
         print("2 - Produkt ändern")
         print("3 - Beenden")
@@ -83,14 +84,14 @@ def main() -> None:
         auswahl = input("Bitte wählen: ").strip()
 
         if auswahl == "1":
-            zeige_alle_produkte(repo)
+            produkte_anzeigen(repo)
         elif auswahl == "2":
             produkt_aendern(repo)
         elif auswahl == "3":
-            print("\nProgramm beendet.")
+            print("Programm beendet.")
             break
         else:
-            print("\nUngültige Eingabe.\n")
+            print("Ungültige Eingabe.")
 
 
 if __name__ == "__main__":
