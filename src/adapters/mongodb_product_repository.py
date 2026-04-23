@@ -14,10 +14,6 @@ class MongoDBProductRepository:
         self.collection = self.db["products"]
 
     def save_product(self, product: Product) -> None:
-        """
-        Speichert ein Produkt in MongoDB.
-        Falls die Produkt-ID schon existiert, wird der Datensatz aktualisiert.
-        """
         self.collection.update_one(
             {"id": product.id},
             {
@@ -27,6 +23,7 @@ class MongoDBProductRepository:
                     "description": product.description,
                     "price": product.price,
                     "quantity": product.quantity,
+                    "min_stock": product.min_stock,
                     "sku": product.sku,
                     "category": product.category,
                     "created_at": product.created_at,
@@ -38,9 +35,6 @@ class MongoDBProductRepository:
         )
 
     def load_product_by_id(self, product_id: str) -> Product | None:
-        """
-        Lädt ein Produkt anhand seiner ID.
-        """
         doc = self.collection.find_one({"id": product_id})
 
         if doc is None:
@@ -53,7 +47,7 @@ class MongoDBProductRepository:
             doc["price"],
             doc.get("category", ""),
             doc["quantity"],
-            doc.get("min_stock", 0)
+            doc.get("min_stock", 5)
         )
 
         product.id = doc["id"]
@@ -66,10 +60,6 @@ class MongoDBProductRepository:
         return product
 
     def load_all_products(self) -> list[Product]:
-        """
-        Lädt alle gültigen Produkte aus MongoDB.
-        Alte oder unvollständige Dokumente ohne Pflichtfelder werden übersprungen.
-        """
         products = []
 
         for doc in self.collection.find():
@@ -95,7 +85,7 @@ class MongoDBProductRepository:
                 doc["price"],
                 doc.get("category", ""),
                 doc["quantity"],
-                doc.get("min_stock", 0)
+                doc.get("min_stock", 5)
             )
 
             product.id = doc["id"]

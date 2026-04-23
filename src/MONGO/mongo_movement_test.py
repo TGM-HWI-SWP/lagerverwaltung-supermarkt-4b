@@ -66,6 +66,54 @@ def produkt_verkaufen() -> None:
     print(f"Movement-ID: {movement.movement_id}")
 
 
+def produkt_einkaufen() -> None:
+    product_id = input("Welche Produkt-ID wurde eingekauft? ").strip()
+    product = product_repo.load_product_by_id(product_id)
+
+    if product is None:
+        print("Produkt nicht gefunden.")
+        return
+
+    print(f"\nProdukt gefunden: {product.name}")
+    print(f"Aktueller Bestand: {product.quantity}")
+
+    try:
+        einkaufsmenge = int(input("Wie viele Stück wurden eingekauft? ").strip())
+    except ValueError:
+        print("Ungültige Menge.")
+        return
+
+    if einkaufsmenge <= 0:
+        print("Die Menge muss größer als 0 sein.")
+        return
+
+    alte_menge = product.quantity
+    neue_menge = product.quantity + einkaufsmenge
+
+    product.quantity = neue_menge
+    product.updated_at = datetime.now()
+
+    product_repo.save_product(product)
+
+    movement = Movement(
+        movement_id=generate_movement_id(),
+        product_id=product.id,
+        product_name=product.name,
+        movement_type="PURCHASE",
+        old_quantity=alte_menge,
+        quantity_change=einkaufsmenge,
+        new_quantity=neue_menge,
+        note="Einkauf über Testmenü"
+    )
+
+    movement_repo.save_movement(movement)
+
+    print("\nEinkauf erfolgreich gespeichert.")
+    print(f"Alte Menge: {alte_menge}")
+    print(f"Neue Menge: {neue_menge}")
+    print(f"Movement-ID: {movement.movement_id}")
+
+
 def bewegungen_anzeigen() -> None:
     movements = movement_repo.load_all_movements()
 
@@ -111,19 +159,22 @@ def main() -> None:
     while True:
         print("\n=== MOVEMENT TEST MENÜ ===")
         print("1 - Produkt verkaufen")
-        print("2 - Alle Bewegungen anzeigen")
-        print("3 - Bewegungen eines Produkts anzeigen")
-        print("4 - Beenden")
+        print("2 - Produkt einkaufen")
+        print("3 - Alle Bewegungen anzeigen")
+        print("4 - Bewegungen eines Produkts anzeigen")
+        print("5 - Beenden")
 
         auswahl = input("Bitte wählen: ").strip()
 
         if auswahl == "1":
             produkt_verkaufen()
         elif auswahl == "2":
-            bewegungen_anzeigen()
+            produkt_einkaufen()
         elif auswahl == "3":
-            bewegungen_von_produkt_anzeigen()
+            bewegungen_anzeigen()
         elif auswahl == "4":
+            bewegungen_von_produkt_anzeigen()
+        elif auswahl == "5":
             print("Programm beendet.")
             break
         else:
