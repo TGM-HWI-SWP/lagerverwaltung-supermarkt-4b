@@ -1,0 +1,69 @@
+* [33me412245[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbusinesslogik[m[33m)[m Verbinden von allem
+[31m|[m * [33m9471ab9[m[33m ([m[1;31morigin/businesslogik[m[33m)[m fix: dropdown funktioniert jetzt (ComboBox name korrigiert)
+[31m|[m[31m/[m  
+* [33m9859a70[m Remove TODO.md (no todo files needed)
+*   [33mc8cc588[m Resolve merge conflicts and add pymongo deps
+[33m|[m[34m\[m  
+* [34m|[m [33m0d9c7fc[m finalisation
+* [34m|[m [33m7287bb8[m Resolve merge conflict in ui/__init__.py: Keep latest PyQt6 GUI implementation with Buisnesslogik updates
+* [34m|[m [33m9843061[m Controller V4
+* [34m|[m [33m5abf64a[m Controller V3
+* [34m|[m [33md0c595b[m controller v2
+* [34m|[m [33mfead9af[m controller
+* [34m|[m [33m159edec[m haupt_gui
+* [34m|[m [33m5449efc[m rechnung_gui
+* [34m|[m [33m08b78bf[m kauf_historie_gui
+* [34m|[m [33ma70b4f6[m lieferung_gui
+* [34m|[m [33m945796c[m lagerbestand_gui
+* [34m|[m [33m35192ac[m Test-01
+* [34m|[m [33m76b1563[m Updade Buisness logic
+[34m|[m [34m|[m * [33m85d47fa[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/DB-01[m[33m)[m Fehler behoben
+[34m|[m [34m|[m * [33m36b3aa3[m Report A, Einkauf möglich, Fehler behoben
+[34m|[m [34m|[m[34m/[m  
+[34m|[m * [33m460066a[m Movements DB erstellt, Movements können erstellt werden
+[34m|[m * [33m0d10859[m Insgesamt 100 Produkte erstellt
+[34m|[m * [33m11ed6b7[m Weitere Produkte erstellt
+[34m|[m * [33m09d48ca[m Weitere Produkte erstellt, fehler behoben
+[34m|[m * [33m808f79e[m 20 weitere Produkte hinzugefügt
+[34m|[m *   [33mb200465[m Merge remote-tracking branch 'origin/GUI-03' into DB-01
+[34m|[m [36m|[m[1;31m\[m  
+[34m|[m [36m|[m * [33ma3f1e51[m[33m ([m[1;31morigin/GUI-03[m[33m)[m changelog_tamplate
+[34m|[m [36m|[m * [33m5b03dd6[m GUI-03 V1
+[34m|[m [36m|[m * [33m0ec25cd[m Controller V4
+[34m|[m [36m|[m * [33mb885216[m[33m ([m[1;31morigin/GUI-01[m[33m)[m Controller V3
+[34m|[m [36m|[m * [33m1bf66e1[m controller v2
+[34m|[m [36m|[m * [33mbeb8938[m controller
+[34m|[m [36m|[m * [33m43f6522[m haupt_gui
+[34m|[m [36m|[m * [33mfd355f0[m rechnung_gui
+[34m|[m [36m|[m * [33m39a00e2[m kauf_historie_gui
+[34m|[m [36m|[m * [33m5873187[m lieferung_gui
+[34m|[m [36m|[m * [33m886076c[m lagerbestand_gui
+[34m|[m [36m|[m * [33m4edbe2b[m Test-01
+[34m|[m * [1;31m|[m [33m9af0906[m Mit MongoDB gearbeitet, fehler behoben, Daten erstellt
+[34m|[m * [1;31m|[m   [33mbbf38f8[m Merge remote-tracking branch 'origin/businesslogik-aleksej' into DB-01
+[34m|[m [1;32m|[m[1;33m\[m [1;31m\[m  
+[34m|[m [1;32m|[m * [1;31m|[m [33m7aa8432[m[33m ([m[1;31morigin/businesslogik-aleksej[m[33m, [m[1;32mbusinesslogik-aleksej[m[33m)[m docs: todo progress - rebase prep
+[34m|[m [1;32m|[m * [1;31m|[m [33m98c0de6[m docs: update TODO.md for git cleanup progress
+[34m|[m [1;32m|[m * [1;31m|[m [33m1e48995[m Businesslogik v0.3 complete (Aleksej)
+[34m|[m [1;32m|[m[34m/[m [1;31m/[m  
+[34m|[m[34m/[m[1;32m|[m [1;31m|[m   
+* [1;32m|[m [1;31m|[m [33ma2ae9bb[m docs: Implementierungsplan als TODO.md und Progress
+* [1;32m|[m [1;31m|[m [33m1489798[m test: Unit-Tests für Domain (Product/Movement) und WarehouseService
+* [1;32m|[m [1;31m|[m [33md5c3d9a[m feat: Report A - integrierter Lagerbestandsbericht mit Warnungen
+* [1;32m|[m [1;31m|[m [33m0bf1656[m feat: WarehouseService komplett mit Bestandslogik, Bewegungen und DI
+* [1;32m|[m [1;31m|[m [33m3704188[m feat: InMemoryRepository erweitert und SQLiteRepository + Factory implementiert
+* [1;32m|[m [1;31m|[m [33m4cb0733[m feat: RepositoryPort Schnittstelle als ABC definiert
+* [1;32m|[m [1;31m|[m [33me6426c8[m feat: erweiterte Product Klasse mit Validierung und neue Movement Dataklasse
+* [1;32m|[m [1;31m|[m [33mcbbccb8[m[33m ([m[1;31morigin/test-dummy-daten[m[33m)[m feat: WarehouseService Klasse erstellt
+* [1;32m|[m [1;31m|[m [33ma0d0867[m[33m ([m[1;31morigin/lagerbestand[m[33m, [m[1;32mlagerbestand[m[33m)[m feat: Lagerbestand Business Logic + Report A implementiert
+[1;33m|[m * [1;31m|[m [33mfbd0253[m feat: MongoDB Erstellt +Dummy Daten + Änderungen + Test Menü
+[1;33m|[m * [1;31m|[m [33macbef40[m Test
+[1;33m|[m [1;31m|[m[1;31m/[m  
+[1;33m|[m [1;31m|[m * [33mf1e6868[m[33m ([m[1;31morigin/Woche-1[m[33m)[m added comment to readme.md
+[1;33m|[m [1;31m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;31m|[m   
+* [1;31m|[m [33m2e23e75[m[33m ([m[1;32mfeature/business-logic[m[33m, [m[1;32mWoche-1[m[33m)[m v0.1 project setup + business logic start
+* [1;31m|[m [33m5d4a7a3[m feat: business logic hinzugefügt
+[1;31m|[m[1;31m/[m  
+* [33m27d0697[m[33m ([m[1;32mmain[m[33m, [m[1;32mDB-01[m[33m)[m add online IDE url; add deadline
+* [33mc4cad19[m[33m ([m[1;31mupstream/main[m[33m)[m Initial commit

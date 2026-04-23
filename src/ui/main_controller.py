@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (
     QAbstractItemView, QHeaderView, QCompleter
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
-from PyQt6.QtCore import Qt, QObject, QEvent
+from PyQt6.QtCore import Qt, QObject, QEvent, QTimer
 from PyQt6 import uic
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -23,25 +23,32 @@ except ImportError:
     from src.adapters.repository import RepositoryFactory
     from src.services import WarehouseService
 
-class ComboBoxEventFilter(QObject):
-    """Opens combobox dropdown on mouse click or focus, and focuses line edit for typing."""
+class ComboBoxAppFilter(QObject):
+    """Application-level filter that opens a QComboBox dropdown on click/focus.
+    
+    Installed on QApplication.instance() so it receives events BEFORE the
+    target widget consumes them.
+    """
+    def __init__(self, combo: QComboBox, parent=None):
+        super().__init__(parent)
+        self.combo = combo
+        self._line_edit = combo.lineEdit()
+
     def eventFilter(self, obj, event):
-        if event.type() == QEvent.Type.MouseButtonPress:
-            if isinstance(obj, QComboBox):
-                obj.showPopup()
-                # Focus the line edit so user can type immediately
-                line_edit = obj.lineEdit()
-                if line_edit:
-                    line_edit.setFocus()
-                    line_edit.selectAll()  # Select any existing text
-                return True
-        elif event.type() == QEvent.Type.FocusIn:
-            if isinstance(obj, QComboBox):
-                obj.showPopup()
-                line_edit = obj.lineEdit()
-                if line_edit:
-                    line_edit.setFocus()
-                return True
+        if event.type() in (QEvent.Type.MouseButtonPress, QEvent.Type.FocusIn):
+            if obj is self.combo or obj is self._line_edit:
+                self.combo.showPopup()
+        return super().eventFilter(obj, event)
+
+class ComboBoxLineEditFilter(QObject):
+    """Event filter installed on a QComboBox's line edit to open dropdown on click/focus."""
+    def __init__(self, combo: QComboBox, parent=None):
+        super().__init__(parent)
+        self.combo = combo
+
+    def eventFilter(self, obj, event):
+        if event.type() in (QEvent.Type.MouseButtonPress, QEvent.Type.FocusIn):
+            self.combo.showPopup()
         return super().eventFilter(obj, event)
 
 class LagerbestandController(QMainWindow):
@@ -135,9 +142,6 @@ class LieferungController(QMainWindow):
             combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
             combo.setMaxVisibleItems(15)
             
-            # Install event filter to open dropdown on click and focus line edit
-            combo.installEventFilter(ComboBoxEventFilter())
-            
             products = self.service.get_all_products()
             display_items = []
             for pid, product in sorted(products.items()):
@@ -159,6 +163,7 @@ class LieferungController(QMainWindow):
             # Konfiguriere das eingebaute LineEdit
             line_edit = combo.lineEdit()
             if line_edit:
+                line_edit.installEventFilter(ComboBoxLineEditFilter(combo))
                 line_edit.setPlaceholderText("Produktname oder ID eingeben und Enter drücken")
                 line_edit.setClearButtonEnabled(True)  # X-Button zum Löschen
                 line_edit.returnPressed.connect(self._sync_combo_from_text)
@@ -405,22 +410,12 @@ class SupermarktMain(QMainWindow):
         self.base_dir = Path(__file__).resolve().parent
         print(f"UI base dir: {self.base_dir}")
 
-        # Try MongoDB first, fallback to SQLite if unavailable
-        try:
-            self.service = WarehouseService()
-            # Quick connectivity test
-            self.service.get_all_products()
-            print("MongoDB connected successfully")
-        except Exception as mongo_err:
-            print(f"MongoDB connection failed: {mongo_err}")
-            QMessageBox.warning(
-                self,
-                "MongoDB nicht erreichbar",
-                f"Verbindung zu MongoDB fehlgeschlagen:\n{mongo_err}\n\n"
-                "Es wird auf SQLite (lokal) zurückgegriffen."
-            )
-            repo = RepositoryFactory.create_repository("sqlite")
-            self.service = WarehouseService(repo)
+        # MongoDB explizit aktivieren
+        repo = RepositoryFactory.create_repository("mongodb")
+        self.service = WarehouseService(repo)
+        # Quick connectivity test
+        self.service.get_all_products()
+        print("MongoDB connected successfully")
 
         # Load sample products if the repository is empty.
         if not self.service.get_all_products():
@@ -429,7 +424,7 @@ class SupermarktMain(QMainWindow):
         ui_path = self.base_dir / "haupt_gui.ui"
         print(f"Loading UI: {ui_path}")
         uic.loadUi(str(ui_path), self)
-        self.setWindowTitle("Supermarkt Lagerverwaltung")
+        self.setWindowTitle("Supermarkt Lagerverwaltung [MongoDB]")
         self.showMaximized()
         self.sub_windows = {}
         self._setup_main_buttons()
@@ -508,3 +503,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
