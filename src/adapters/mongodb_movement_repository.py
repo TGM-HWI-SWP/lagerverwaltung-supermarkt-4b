@@ -1,4 +1,4 @@
-from src.MONGO.mongo_movements import Movement
+from src.domain.movement import Movement
 from pymongo import MongoClient
 
 

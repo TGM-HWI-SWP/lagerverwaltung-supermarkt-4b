@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.MONGO.mongo_movements import Movement
+from src.domain.movement import Movement
 from src.adapters.mongodb_product_repository import MongoDBProductRepository
 from src.adapters.mongodb_movement_repository import MongoDBMovementRepository
 
