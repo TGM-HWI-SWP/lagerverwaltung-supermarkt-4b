@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional
-from src.ports.ports import RepositoryPort
+from src.ports.repository_port import RepositoryPort
 from src.domain.product import Product
 from src.domain.movement import Movement
 from src.adapters.repository import RepositoryFactory
@@ -9,7 +9,7 @@ class WarehouseService:
 
     def __init__(self, repo=None):
         if repo is None:
-            self.repository = RepositoryFactory.create_repository("sqlite")
+            self.repository = RepositoryFactory.create_repository()
         else:
             self.repository = repo
 
@@ -92,3 +92,13 @@ class WarehouseService:
     def get_movements(self) -> List[Movement]:
         """Get all stock movements."""
         return self.repository.get_movements()
+
+    def load_dummy_data(self, performed_by: str = "system"):
+        """Load supermarket dummy data if empty."""
+        if len(self.repository.get_all()) > 0:
+            return  # Already has data
+        
+        self.create_product("MILK001", "Vollmilch 1L", "Frische Vollmilch", 1.29, "Milchprodukte", 20, performed_by)
+        self.create_product("BREAD001", "Vollkornbrot", "Frisches Vollkornbrot 500g", 2.49, "Backwaren", 10, performed_by)
+        self.create_product("APPLE001", "Äpfel Bio", "Bio Äpfel loose kg", 3.99, "Obst", 3, performed_by)
+        self.create_product("LAPTOP001", "Gaming Laptop", "High-End Gaming Laptop", 1299.99, "Elektronik", 2, performed_by)

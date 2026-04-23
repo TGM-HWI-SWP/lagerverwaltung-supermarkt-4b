@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Supermarkt Lagerverwaltung</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
@@ -125,11 +125,7 @@
       </font>
      </property>
      <property name="text">
-<<<<<<< HEAD
-      <string>Kauf Historie</string>
-=======
       <string>Kaufhistorie</string>
->>>>>>> origin/main
      </property>
     </widget>
    </widget>
@@ -185,3 +181,4 @@
  <resources/>
  <connections/>
 </ui>
+

@@ -6,30 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1108</width>
-    <height>839</height>
+    <width>1200</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
-<<<<<<< HEAD
-   <string>MainWindow</string>
-=======
    <string>Liefereingabe</string>
->>>>>>> origin/main
   </property>
   <widget class="QWidget" name="centralwidget">
+
+   <!-- Überschrift -->
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-<<<<<<< HEAD
-      <x>330</x>
-      <y>40</y>
-      <width>401</width>
-      <height>41</height>
-     </rect>
-    </property>
-=======
-      <x>304</x>
+      <x>350</x>
       <y>20</y>
       <width>500</width>
       <height>60</height>
@@ -38,87 +28,218 @@
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
->>>>>>> origin/main
     <property name="font">
      <font>
       <pointsize>20</pointsize>
      </font>
     </property>
     <property name="text">
-<<<<<<< HEAD
-     <string>Lagerbestand aktuallisieren </string>
-=======
-     <string>Liefereingabe</string>
->>>>>>> origin/main
+     <string>Liefereingabe &amp; Bestellung</string>
     </property>
    </widget>
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>130</y>
-      <width>961</width>
-      <height>641</height>
-     </rect>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>959</width>
-       <height>639</height>
-      </rect>
-     </property>
-     <widget class="QTableWidget" name="tableWidget">
-      <property name="geometry">
-       <rect>
-        <x>35</x>
-        <y>41</y>
-        <width>891</width>
-        <height>561</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-<<<<<<< HEAD
+
+   <!-- Zurück-Button -->
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>40</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;-- Zurück</string>
-=======
-   <widget class="QPushButton" name="backButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>34</y>
+      <y>30</y>
       <width>150</width>
       <height>40</height>
      </rect>
     </property>
     <property name="text">
      <string>← Zurück</string>
->>>>>>> origin/main
     </property>
    </widget>
+
+   <!-- Produkt-Tabelle (links) -->
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>650</width>
+      <height>500</height>
+     </rect>
+    </property>
+   </widget>
+
+   <!-- Bestell-Formular (rechts) -->
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>100</y>
+      <width>440</width>
+      <height>500</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Warenbewegung</string>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+
+    <!-- Produkt -->
+    <widget class="QLabel" name="labelProduct">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>120</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Produkt:</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxProduct">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>260</width>
+       <height>30</height>
+      </rect>
+     </property>
+    </widget>
+
+    <!-- Menge -->
+    <widget class="QLabel" name="labelMenge">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>120</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Menge:</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxMenge">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>100</y>
+       <width>260</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>9999</number>
+     </property>
+     <property name="value">
+      <number>1</number>
+     </property>
+    </widget>
+
+    <!-- Grund -->
+    <widget class="QLabel" name="labelGrund">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>120</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Grund:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditGrund">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>160</y>
+       <width>260</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>z.B. Lieferung oder Verkauf</string>
+     </property>
+    </widget>
+
+    <!-- Einbuchen Button -->
+    <widget class="QPushButton" name="pushButtonEinbuchen">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>240</y>
+       <width>390</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>background-color: #4CAF50; color: white;</string>
+     </property>
+     <property name="text">
+      <string>➕ Einbuchen (Wareneingang)</string>
+     </property>
+    </widget>
+
+    <!-- Ausbuchen Button -->
+    <widget class="QPushButton" name="pushButtonAusbuchen">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>310</y>
+       <width>390</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>background-color: #f44336; color: white;</string>
+     </property>
+     <property name="text">
+      <string>➖ Ausbuchen (Verkauf)</string>
+     </property>
+    </widget>
+   </widget>
+
+   <!-- Info-Label unten -->
+   <widget class="QLabel" name="labelInfo">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>620</y>
+      <width>1130</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wähle ein Produkt aus, gib die Menge ein und klicke auf Einbuchen oder Ausbuchen.</string>
+    </property>
+   </widget>
+
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1108</width>
+     <width>1200</width>
      <height>26</height>
     </rect>
    </property>
@@ -128,3 +249,4 @@
  <resources/>
  <connections/>
 </ui>
+

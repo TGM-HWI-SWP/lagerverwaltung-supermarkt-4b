@@ -7,4 +7,8 @@ sys.path.insert(0, '.')
 
 from src.ui.main_controller import main
 
+if __name__ == "__main__":
+    main()
+
+
 
