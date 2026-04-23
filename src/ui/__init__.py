@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """UI Layer - Graphical User Interface Skeleton"""
 
 import sys
@@ -250,3 +251,5 @@ def main():
 if __name__ == "__main__":
     main()
 
+=======
+>>>>>>> origin/main

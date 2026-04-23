@@ -11,25 +11,45 @@
    </rect>
   </property>
   <property name="windowTitle">
+<<<<<<< HEAD
    <string>MainWindow</string>
+=======
+   <string>Liefereingabe</string>
+>>>>>>> origin/main
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
+<<<<<<< HEAD
       <x>330</x>
       <y>40</y>
       <width>401</width>
       <height>41</height>
      </rect>
     </property>
+=======
+      <x>304</x>
+      <y>20</y>
+      <width>500</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+>>>>>>> origin/main
     <property name="font">
      <font>
       <pointsize>20</pointsize>
      </font>
     </property>
     <property name="text">
+<<<<<<< HEAD
      <string>Lagerbestand aktuallisieren </string>
+=======
+     <string>Liefereingabe</string>
+>>>>>>> origin/main
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollArea">
@@ -65,6 +85,7 @@
      </widget>
     </widget>
    </widget>
+<<<<<<< HEAD
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
@@ -76,6 +97,19 @@
     </property>
     <property name="text">
      <string>&lt;-- Zurück</string>
+=======
+   <widget class="QPushButton" name="backButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>34</y>
+      <width>150</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>← Zurück</string>
+>>>>>>> origin/main
     </property>
    </widget>
   </widget>

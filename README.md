@@ -55,11 +55,11 @@ projekt/
 
 ### Entwicklungsumgebung aufbauen
 
+
 ```bash
 # 1. Repository klonen
 git clone <repository-url>
 cd projekt
-
 # 2. Virtuelle Umgebung erstellen (optional, aber empfohlen)
 python -m venv venv
 #Fabian1234

@@ -72,8 +72,22 @@ class SQLiteRepository(RepositoryPort):
         cursor.execute("SELECT * FROM products WHERE product_id = ?", (product_id,))
         row = cursor.fetchone()
         if row:
+<<<<<<< HEAD
             # Skip product_id, pass explicitly: product_id=row[0], name=row[1], desc=row[2], price=row[3], category=row[4], quantity=row[5], min_stock=row[6]
             return Product(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+=======
+            # Map row to Product constructor: product_id, name, desc, price, cat, qty, min_stock ignored for constructor
+            product = Product(
+                product_id=row[0],
+                name=row[1],
+                description=row[2],
+                price=row[3],
+                category=row[4],
+                quantity=row[5]
+            )
+            product.min_stock = row[6]  # Set manually
+            return product
+>>>>>>> origin/main
         return None
 
     def get_all(self) -> Dict[str, Product]:
@@ -83,7 +97,19 @@ class SQLiteRepository(RepositoryPort):
         products = {}
         for row in rows:
             product_id = row[0]
+<<<<<<< HEAD
             product = Product(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+=======
+            product = Product(
+                product_id=row[0],
+                name=row[1],
+                description=row[2],
+                price=row[3],
+                category=row[4],
+                quantity=row[5]
+            )
+            product.min_stock = row[6]
+>>>>>>> origin/main
             products[product_id] = product
         return products
 
