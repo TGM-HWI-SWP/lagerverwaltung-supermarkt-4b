@@ -95,7 +95,7 @@ class WarehouseMainWindow(QMainWindow):
         self.setGeometry(100, 100, 1000, 600)
 
         # Initialisiere Service
-        self.repository = RepositoryFactory.create_repository("memory")
+self.repository = RepositoryFactory.create("sqlite")
         self.service = WarehouseService(self.repository)
 
         # Erstelle UI

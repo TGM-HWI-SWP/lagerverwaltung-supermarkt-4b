@@ -43,7 +43,7 @@ class RepositoryFactory:
     """Factory for creating repository implementations."""
 
     @classmethod
-    def create(cls, repo_type: str = "memory") -> RepositoryPort:
+    def create_repository(cls, repo_type: str = "memory") -> RepositoryPort:
         if repo_type == "memory":
             return InMemoryRepository()
         elif repo_type == "sqlite":
@@ -51,3 +51,7 @@ class RepositoryFactory:
             return SQLiteRepository("warehouse.db")
         else:
             raise ValueError(f"Unknown repository type: {repo_type}")
+
+    @classmethod
+    def create(cls, repo_type: str = "memory") -> RepositoryPort:
+        return cls.create_repository(repo_type)

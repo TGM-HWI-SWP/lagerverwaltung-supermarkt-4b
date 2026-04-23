@@ -2,12 +2,16 @@ from typing import Dict, List, Optional
 from src.ports.ports import RepositoryPort
 from src.domain.product import Product
 from src.domain.movement import Movement
+from src.adapters.repository import RepositoryFactory
 
 class WarehouseService:
     """Core business logic for supermarket warehouse management."""
 
-    def __init__(self, repository: RepositoryPort):
-        self.repository: RepositoryPort = repository
+    def __init__(self, repo=None):
+        if repo is None:
+            self.repository = RepositoryFactory.create_repository("sqlite")
+        else:
+            self.repository = repo
 
     def create_product(
         self,
@@ -37,7 +41,7 @@ class WarehouseService:
             raise ValueError(f"Product {product_id} not found")
         
         movement = product.update_quantity(quantity, reason, performed_by)
-        self.repository.save_movement(movement)  # No update needed, product updated in place
+        self.repository.save_movement(movement)
         return movement
 
     def remove_stock(
