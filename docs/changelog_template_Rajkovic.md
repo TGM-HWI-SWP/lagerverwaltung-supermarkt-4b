@@ -128,6 +128,8 @@ Persönliches Changelog für butriman1234, Rolle: Backend / MongoDB / Reports
 **Größte Herausforderung:** MongoDB hat ein paar Probleme gemacht. Ich konnte mich nicht mehr mit der DB verbinden.  
 **Schönste Code-Zeile:** In mongo_products.py, da es so einheitlich aussieht
 
+****MONGODB Zugangsdaten**** Email: rajkovic.gabriel@gmx.at Passwort: GR12345GR
+
 
 ---
 
