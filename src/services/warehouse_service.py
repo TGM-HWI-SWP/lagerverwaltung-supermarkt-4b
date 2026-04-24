@@ -41,6 +41,7 @@ class WarehouseService:
             raise ValueError(f"Product {product_id} not found")
         
         movement = product.update_quantity(quantity, reason, performed_by)
+        self.repository.add(product)
         self.repository.save_movement(movement)
         return movement
 
@@ -57,6 +58,7 @@ class WarehouseService:
             raise ValueError(f"Product {product_id} not found")
         
         movement = product.update_quantity(-quantity, reason, performed_by)
+        self.repository.add(product)
         self.repository.save_movement(movement)
         return movement
 

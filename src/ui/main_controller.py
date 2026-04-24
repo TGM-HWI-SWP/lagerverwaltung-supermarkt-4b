@@ -23,6 +23,8 @@ except ImportError:
     from src.adapters.repository import RepositoryFactory
     from src.services import WarehouseService
 
+from src.domain.lieferung_window import LieferungWindow
+
 class ComboBoxAppFilter(QObject):
     """Application-level filter that opens a QComboBox dropdown on click/focus.
     
@@ -74,6 +76,10 @@ class LagerbestandController(QMainWindow):
         if self.parent():
             self.parent().show()
         event.accept()
+
+    def showEvent(self, event):
+        self._refresh_table()
+        super().showEvent(event)
 
     def _refresh_table(self):
         table = self.findChild(QTableView, "tableView")
@@ -459,10 +465,19 @@ class SupermarktMain(QMainWindow):
         self.hide()
 
     def show_lieferung(self):
-        if 'lieferung' not in self.sub_windows:
-            self.sub_windows['lieferung'] = LieferungController(self.service, self)
-        self.sub_windows['lieferung'].show()
+        self.lieferung_window = LieferungWindow(
+            self.service,
+            str(self.base_dir / "lieferung_gui.ui")
+        )
+        back_button = self.lieferung_window.findChild(QPushButton, "pushButton")
+        if back_button:
+            back_button.clicked.connect(self._back_from_lieferung)
+        self.lieferung_window.show()
         self.hide()
+
+    def _back_from_lieferung(self):
+        self.lieferung_window.close()
+        self.show()
 
     def show_random_purchases(self):
         if not self.service.get_all_products():
