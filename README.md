@@ -295,3 +295,18 @@ Schulprojekt - TGM
 ## Kontakt
 
 Projektverantwortung: [Rolle 1 Person]
+
+
+
+## Technische Hinweise (Gabriel Rajkovic - Datenbank)
+
+- Das Projekt verwendet **MongoDB Atlas** als Datenbank.
+- Verbindung erfolgt über `pymongo` mit einem `mongodb+srv://`-String.
+- Benötigte Libraries:
+  - pymongo
+  - dnspython
+
+**Start der Anwendung (Beispiel):**
+ - Hauptmöglichkeit die Datein zu öffnen 
+```bash
+python -m src.ui.<datei>

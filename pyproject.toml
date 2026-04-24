@@ -12,6 +12,7 @@ dependencies = [
     "PyQt6>=6.6.0",
     "tinydb>=4.8.0",
     "pytest>=7.4.0",
+    "dnspython>=2.4.0",
     "pytest-cov>=4.1.0",\n    "pymongo>=4.6.0",\n]
 
 [project.optional-dependencies]

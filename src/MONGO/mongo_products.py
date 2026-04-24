@@ -1,24 +1,23 @@
-from datetime import datetime
-from src.domain.product import Product
-from src.adapters.mongodb_product_repository import MongoDBProductRepository
+from datetime import datetime  # für Zeitstempel
+from src.domain.product import Product  # Domain-Klasse für Produkte
+from src.adapters.mongodb_product_repository import MongoDBProductRepository  # Repository für MongoDB-Zugriff
 
-# MONGO_URI = "mongodb+srv://rajkovicgabriel_db_user:Gabi12345.@cluster0.jge9ku6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-MONGO_URI = "mongodb+srv://rajkovicgabriel_db_user:GR12345GR@cluster0.jge9ku6.mongodb.net/?appName=Cluster0"
+MONGO_URI = "mongodb+srv://rajkovicgabriel_db_user:GR12345GR@cluster0.jge9ku6.mongodb.net/?appName=Cluster0"  # aktiver Verbindungsstring zur DB
 
-repo = MongoDBProductRepository(MONGO_URI)
+repo = MongoDBProductRepository(MONGO_URI)  # erstellt Repository für Produktoperationen
 
 
-def make_product(id_, name, description, price, category, quantity, min_stock, sku, notes):
-    p = Product(id_, name, description, price, category, quantity, min_stock)
+def make_product(id_, name, description, price, category, quantity, min_stock, sku, notes):  # Hilfsfunktion zum Erstellen von Produkten
+    p = Product(id_, name, description, price, category, quantity, min_stock)  # erzeugt Produktobjekt
 
     # fehlende Attribute ergänzen, damit dein Repo.save_product() funktioniert
-    p.id = id_
-    p.sku = sku
-    p.notes = notes
-    p.created_at = datetime.now()
-    p.updated_at = datetime.now()
+    p.id = id_  # setzt zusätzliche ID für MongoDB (da Repo mit "id" arbeitet)
+    p.sku = sku  # setzt SKU (Artikelnummer)
+    p.notes = notes  # setzt Notizen
+    p.created_at = datetime.now()  # setzt Erstellungszeitpunkt
+    p.updated_at = datetime.now()  # setzt Änderungszeitpunkt
 
-    return p
+    return p  # gibt fertiges Produktobjekt zurück
 
 
 products = [
