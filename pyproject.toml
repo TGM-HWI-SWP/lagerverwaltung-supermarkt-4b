@@ -1,40 +1,42 @@
 [build-system]
-requires = ["setuptools>=65.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools>=65.0", "wheel"]  # setuptools und wheel sind notwendig um das Projekt zu bauen und zu installieren
+build-backend = "setuptools.build_meta"  # definiert setuptools als Build Backend
 
 [project]
-name = "projekt-verwaltung"
-version = "0.1.0"
-description = "Verwaltungssoftware für Lagerverwaltung/Produktmanagement"
-readme = "README.md"
-requires-python = ">=3.10"
-dependencies = [
-    "PyQt6>=6.6.0",
-    "tinydb>=4.8.0",
-    "pytest>=7.4.0",
-    "dnspython>=2.4.0",
-    "pytest-cov>=4.1.0",\n    "pymongo>=4.6.0",\n]
+name = "projekt-verwaltung"  # Name des Pakets bei Installation
+version = "0.1.0"  # aktuelle Versionsnummer des Projekts
+description = "Verwaltungssoftware fuer Lagerverwaltung und Produktmanagement"  # Kurzbeschreibung fuer Paketmanager
+readme = "README.md"  # Referenz zur README Datei
+requires-python = ">=3.10"  # minimale Python Version die benoetigt wird
+dependencies = [  # Liste aller Pakete die automatisch mitinstalliert werden
+    "PyQt6>=6.6.0",  # GUI Framework fuer die Benutzeroberflaeche
+    "tinydb>=4.8.0",  # leichte Dateibasierte Datenbank als Fallback
+    "pytest>=7.4.0",  # Test Framework fuer automatisierte Tests
+    "dnspython>=2.4.0",  # wird von pymongo fuer DNS Aufloesung bei MongoDB Atlas benoetigt
+    "pytest-cov>=4.1.0",  # Coverage Plugin fuer pytest um Testabdeckung zu messen
+    "pymongo>=4.6.0",  # MongoDB Treiber fuer Verbindung zur Atlas Datenbank
+]
 
 [project.optional-dependencies]
-dev = [
-    "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
-    "black>=23.9.0",
-    "flake8>=6.1.0",
-    "mypy>=1.5.0",
+dev = [  # zusaetzliche Abhaengigkeiten nur fuer Entwickler
+    "pytest>=7.4.0",  # Test Framework auch fuer Entwickler
+    "pytest-cov>=4.1.0",  # Coverage Messung auch fuer Entwickler
+    "black>=23.9.0",  # Code Formatter fuer einheitlichen Stil
+    "flake8>=6.1.0",  # Linter zur statischen Code Analyse
+    "mypy>=1.5.0",  # statischer Typ Checker fuer Python
 ]
 
 [tool.setuptools]
-packages = ["src", "tests"]
+packages = ["src", "tests"]  # definiert welche Verzeichnisse als Pakete behandelt werden
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
+testpaths = ["tests"]  # pytest sucht in diesem Ordner nach Tests
+python_files = "test_*.py"  # pytest erkennt nur Dateien mit diesem Muster als Tests
 
 [tool.black]
-line-length = 100
+line-length = 100  # black formatiert Zeilen auf maximal 100 Zeichen Laenge
 
 [tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
+python_version = "3.10"  # mypy prueft gegen Python 3.10 Syntax
+warn_return_any = true  # warnt wenn Funktion Any zurueckgibt ohne Typisierung
+warn_unused_configs = true  # warnt bei ungenutzten mypy Konfigurationen

@@ -1,17 +1,18 @@
 """Central Ports - Unified interfaces for hexagonal architecture."""
+# Dieses Modul definiert zentrale Schnittstellen für die hexagonale Architektur
 
-from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from abc import ABC, abstractmethod  # für abstrakte Klassen und Methoden
+from typing import Dict, List, Optional  # Typisierung für Rückgabewerte
 
-from ..domain.product import Product
-from ..domain.movement import Movement
+from ..domain.product import Product  # importiert Produkt aus Domain
+from ..domain.movement import Movement  # importiert Movement aus Domain
 
-class RepositoryPort(ABC):
+class RepositoryPort(ABC):  # abstrakte Schnittstelle für Datenpersistenz
     '''Port für Datenpersistenz (Produkte und Bewegungen). English methods matching adapters.'''
     
     @abstractmethod
     def add(self, product: Product) -> None:
-        '''Produkt hinzufügen/aktualisieren.'''
+        '''Produkt hinzufügen oder aktualisieren.'''
         pass
 
     @abstractmethod
@@ -39,8 +40,8 @@ class RepositoryPort(ABC):
         '''Alle Bewegungen laden.'''
         pass
 
-class ReportPort(ABC):
-    '''Port für Report-Generierung.'''
+class ReportPort(ABC):  # abstrakte Schnittstelle für Report Generierung
+    '''Port für Report Generierung.'''
     
     @abstractmethod
     def generate_inventory_report(self) -> str:

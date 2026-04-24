@@ -1,15 +1,24 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Pc_A4vY0)
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=23109494&assignment_repo_type=AssignmentRepo)
 # Lagerverwaltungssystem - Projektvorlage
+# Projekt: Supermarkt Lagerverwaltung mit PyQt6 GUI und MongoDB
 
-Vollständige Projektvorlage für ein professionelles Softwareentwicklungs- und Projektmanagement-Projekt. Dieses Projekt dient als Basis für die Entwicklung einer Lagerverwaltungs- oder Produktverwaltungssoftware mit professionellen Vorgaben.
+## Projektueberblick
+# Dieses Projekt ist ein Lagerverwaltungssystem fuer einen Supermarkt
+# Es verwendet eine hexagonale Architektur mit Domain Ports Adapters und Services
+# Die GUI wurde mit PyQt6 und Qt Designer entwickelt
+# Die Daten werden in MongoDB Atlas gespeichert
 
-## Projektüberblick
+- **Projektdauer:** 8 Wochen  # Dauer des Schulprojekts
+- **Unterricht:** 2 UE pro Woche  # Unterrichtseinheiten pro Woche
+- **Gruppengröße:** 4 Personen  # Teamgroesse
+- **Ziel:** Professionelle Softwareentwicklung und Projektmanagement  # Lernziel
 
-- **Projektdauer:** 8 Wochen
-- **Unterricht:** 2 UE pro Woche
-- **Gruppengröße:** 3er- und 4er-Gruppen (Standard: 4er)
-- **Ziel:** Professionelle Softwareentwicklung und Projektmanagement
+## Teammitglieder und Rollen
+# Rolle 1: Projektverantwortung und Schnittstellen
+# Rolle 2: Businesslogik und Report A  # Aleksej Pancika
+# Rolle 3: Report B und Qualitaet
+# Rolle 4: GUI und Interaktion  # Aleksej Pancika
 
 ## Projektstruktur
 
@@ -17,171 +26,117 @@ Vollständige Projektvorlage für ein professionelles Softwareentwicklungs- und 
 projekt/
 ├── src/                          # Quellcode
 │   ├── domain/                   # Domain-Modelle
-│   │   ├── product.py            # Produktklasse
+│   │   ├── product.py            # Produktklasse mit Validierung
+│   │   ├── movement.py           # Bewegungsdatenklasse
 │   │   └── warehouse.py          # Lagerverwaltung
 │   ├── ports/                    # Schnittstellen (Abstraktion)
-│   │   └── __init__.py          # Repository- und Report-Ports
+│   │   ├── repository_port.py   # Repository Schnittstelle
+│   │   └── ports.py             # Report und Repository Ports
 │   ├── adapters/                 # Adapter (konkrete Implementierungen)
-│   │   ├── repository.py         # In-Memory und persistente Adapter
-│   │   └── report.py             # Report-Adapter
+│   │   ├── repository.py         # InMemory und MongoDB Repository
+│   │   └── report.py             # Report Adapter
 │   ├── services/                 # Business Logic
-│   │   └── __init__.py          # WarehouseService
+│   │   └── warehouse_service.py # WarehouseService mit DI
 │   ├── ui/                       # Benutzeroberfläche (PyQt6)
-│   │   └── __init__.py          # GUI-Hauptfenster
+│   │   ├── main_controller.py   # Hauptcontroller
+│   │   ├── gui.py               # Legacy GUI
+│   │   └── stock_dialog.py      # Bestandsdialog
 │   └── reports/                  # Report-Generierung
+│       └── report_a.py           # Lagerbestandsreport
 ├── tests/                        # Tests
 │   ├── unit/                     # Unit Tests
-│   │   └── test_domain.py       # Tests für Domain-Modelle
-│   ├── integration/              # Integration Tests
-│   │   └── test_integration.py  # Integrationstest
-│   └── conftest.py              # Pytest-Konfiguration
+│   │   ├── test_domain.py       # Tests fuer Domain
+│   │   └── test_warehouse_service.py  # Tests fuer Service
+│   └── dummy_data.py            # Dummy Daten Generator
 ├── docs/                         # Dokumentation
 │   ├── contracts.md              # Schnittstellen-Dokumentation
 │   ├── architecture.md           # Architektur-Dokumentation
-│   ├── tests.md                  # Test-Dokumentation
-│   ├── retrospective.md          # Retrospektive
-│   └── changelog_<name>.md      # Persönliche Changelog pro Mitglied
-├── data/                         # Datenspeicherung
-├── pyproject.toml                # Python-Projektdefinition & Dependencies
+│   └── changelog_pancika.md     # Changelog Aleksej Pancika
+├── pyproject.toml                # Projektdefinition
 └── README.md                     # Projekt-Dokumentation
-
 ```
 
-## Installation & Setup
+## Installation und Setup
 
 ### Voraussetzungen
+# Python 3.10 oder hoeher wird benoetigt
 - Python 3.10+
 - pip oder Poetry
 
 ### Entwicklungsumgebung aufbauen
 
-
 ```bash
-# 1. Repository klonen
+# Repository klonen
 git clone <repository-url>
 cd projekt
-# 2. Virtuelle Umgebung erstellen (optional, aber empfohlen)
+
+# Virtuelle Umgebung erstellen
 python -m venv venv
-#Fabian1234
 
 # Windows:
 venv\Scripts\activate
 # Linux/Mac:
 source venv/bin/activate
 
-# 3. Dependencies installieren
+# Dependencies installieren
 pip install -e .
 pip install -e ".[dev]"
 
-# 4. Tests ausführen
+# Tests ausfuehren
 pytest
 
-# 5. GUI starten
-python -m src.ui
+# GUI starten
+python run_gui.py
 ```
 
 ## Architektur
 
-Das Projekt folgt der **Port-Adapter-Architektur** (auch Hexagonal Architecture genannt):
+# Das Projekt folgt der Port-Adapter-Architektur (Hexagonal Architecture)
+# Diese Aufteilung ermoeglicht einfaches Testen und Austauschen von Komponenten
 
 - **Domain Layer:** Geschäftslogik und Entities (unabhängig von technischen Details)
 - **Ports:** Schnittstellen für externe Abhängigkeiten (abstrakt)
-- **Adapters:** Konkrete Implementierungen (z.B. In-Memory Repository, Dateisystem, Datenbank)
+- **Adapters:** Konkrete Implementierungen (In-Memory, MongoDB)
 - **Services:** Geschäftsvorgänge und Use Cases
-- **UI:** Benutzeroberfläche
+- **UI:** PyQt6 Benutzeroberfläche mit Qt Designer .ui Dateien
 
-Diese Architektur ermöglicht:
-- **Testbarkeit:** Mock-Implementierungen können einfach bereitgestellt werden
-- **Austauschbarkeit:** Adapters können leicht ausgetauscht werden
-- **Wartbarkeit:** Klare Trennung der Concerns
+## GUI Starten
 
-## Rollenvergabe (4er-Gruppe)
-
-### Rolle 1: Projektverantwortung & Schnittstellen (Contract Owner)
-- Projektkoordination & Kommunikation
-- Zentrale Verantwortung für alle Schnittstellen
-- Dokumentation: `docs/contracts.md`
-- Release- & Versionsverantwortung
-- Unterstützung bei Mergekonflikten
-
-### Rolle 2: Businesslogik & Report A
-- Implementierung der Kern-Use-Cases
-- Umsetzung von Report A (z.B. Lagerstandsreport)
-- Zugehörige Tests
-- Beispiel: Lagerbewirtschaftung, Bestandsverwaltung
-
-### Rolle 3: Report B & Qualität
-- Umsetzung von Report B (z.B. Bewegungsprotokoll, Statistik)
-- Erweiterte Tests (Rand- & Fehlerfälle)
-- Dummy-Daten erstellen
-- Test-Coverage erhöhen
-
-### Rolle 4: GUI & Interaktion
-- Konzeption & Umsetzung der GUI
-- Anbindung an die Businesslogik
-- GUI-Tests oder Testbeschreibung
-
-## Entwicklungsablauf
-
-### Versionsmeilensteine
-
-- **v0.1** – Projektstart, Rollen, erste Contracts
-- **v0.2** – Architektur & Walking Skeleton
-- **v0.3** – Kernlogik & GUI-Minimum
-- **v0.4** – erste Reports
-- **v0.5** – Tests & Stabilisierung
-- **v1.0** – fertige, stabile Version
-
-### Git-Workflow
+# Die GUI wird ueber den Hauptcontroller gestartet
+# Der Controller verbindet alle Fenster mit der Businesslogik
 
 ```bash
-# Feature-Branch erstellen
-git checkout -b feature/<rollenname>/<feature>
+# Haupt GUI starten
+python run_gui.py
 
-# Commits mit aussagekräftigen Meldungen
-git commit -m "Feat: Beschreibung"
-git commit -m "Fix: Bugfix-Beschreibung"
-git commit -m "Docs: Dokumentation"
-git commit -m "Test: Testcode"
-
-# Merge mit Dokumentation
-git push origin feature/...
-# Pull Request erstellen → Review → Merge
+# Alternative direkt ueber Modul
+python -m src.ui.main_controller
 ```
 
-### Dokumentation der Versionen
+## Features
 
-Jedes Gruppen mitglied führt: `docs/changelog_<name>.md`
+# Implementierte Features durch Aleksej Pancika:
+# GUI Grundgeruest mit Qt Designer (.ui Dateien)
+# Hauptcontroller mit Navigation zwischen Fenstern
+# Lagerbestandsuebersicht mit Produkttabelle
+# Ein und Ausbuchung mit ComboBox und Autocomplete
+# Kaufhistorie mit letzten Bewegungen
+# Random Kaeufe Generator fuer Demozwecke
+# MongoDB Integration mit Fallback
 
-Beispiel-Format:
-```markdown
-## [0.2] - 2025-02-06
+## Reports
 
-### Implementiert
-- Warehouse Service erstellt
-- Produktklasse mit Validierung
-
-### Tests
-- test_product_creation
-- test_update_quantity
-
-### Commits
-- abc1234 Feat: Warehouse Service
-- def5678 Test: Product Tests
-```
+# Report A: Lagerbestandsbericht
+# Zeigt aktuellen Bestand aller Produkte an
+# Markiert Produkte mit niedrigem Bestand
+# Berechnet Gesamtwert des Lagers
 
 ## Testing
 
-### Unit Tests ausführen
+### Unit Tests ausfuehren
 
 ```bash
 pytest tests/unit/ -v
-```
-
-### Integration Tests
-
-```bash
-pytest tests/integration/ -v
 ```
 
 ### Mit Coverage
@@ -190,123 +145,24 @@ pytest tests/integration/ -v
 pytest --cov=src tests/
 ```
 
-## Reports
+## Bekannte Probleme
 
-Reports sind eigenständige Komponenten, die:
-- Auf gespeicherten Daten basieren
-- Deterministisch und testbar sind
-- Verschiedene Ausgabeformen unterstützen (Text, Tabelle, Grafik)
-
-Beispiel Report A (Lagerbestandsbericht):
-```
-===============================================================
-LAGERBESTANDSBERICHT
-===============================================================
-
-ID: LAPTOP-001
-  Name: ProBook Laptop
-  Kategorie: Elektronik
-  Bestand: 6
-  Preis: 1200.00 €
-  Gesamtwert: 7200.00 €
-
-Total: 7800.00 €
-===============================================================
-```
-
-## Projektmanagement-Dokumente
-
-Die folgenden PM-Dokumente sind als Word/Markdown zu erstellen:
-
-1. **Projektcharta**
-   - Ziel & Nicht-Ziele
-   - Stakeholder
-   - Risiken
-
-2. **Vorgehensmodell**
-   - Beschreibung (iterativ / Scrum-light)
-   - Begründung
-
-3. **Projektstrukturplan (PSP)**
-   - Gliederung der Projektarbeit
-
-4. **Gantt-Diagramm**
-   - Zeitliche Planung über 8 Wochen
-
-5. **Rollenverteilung**
-   - Aufgaben pro Rolle
-
-**Speichern unter:** `docs/projektmanagement.md` oder als separate PDF
-
-## Versionierung
-
-### Version Format
-```
-MAJOR.MINOR.PATCH
-0.1.0
-```
-
-### Tags im Repository
-```bash
-git tag -a v0.1 -m "v0.1 - Projektstart"
-git push origin v0.1
-```
-
-## Häufige Aufgaben
-
-### Neues Produkt hinzufügen
-```python
-from src.services import WarehouseService
-from src.adapters.repository import RepositoryFactory
-
-repository = RepositoryFactory.create_repository("memory")
-service = WarehouseService(repository)
-
-product = service.create_product(
-    product_id="P001",
-    name="Laptop",
-    description="High-End Laptop",
-    price=1200.0,
-    category="Elektronik",
-    initial_quantity=5
-)
-```
-
-### Bestand aktualisieren
-```python
-service.add_to_stock("P001", 3, reason="Neuer Einkauf", user="Max Mustermann")
-service.remove_from_stock("P001", 2, reason="Verkauf", user="Anna Schmidt")
-```
-
-### Lagerbestandswert berechnen
-```python
-total_value = service.get_total_inventory_value()
-print(f"Gesamtwert: {total_value:.2f} €")
-```
-
-## Known Issues
-
-Siehe `docs/known_issues.md`
+# Siehe docs/known_issues.md
 
 ## Lizenz
 
-Schulprojekt - TGM
+# Schulprojekt TGM
 
 ## Kontakt
 
-Projektverantwortung: [Rolle 1 Person]
+# Projektverantwortung: Team
 
+## Technische Hinweise
 
+# MongoDB Atlas wird als Datenbank verwendet
+# Verbindung erfolgt ueber pymongo mit mongodb+srv:// String
+# Benoetigte Libraries: pymongo dnspython PyQt6
 
-## Technische Hinweise (Gabriel Rajkovic - Datenbank)
-
-- Das Projekt verwendet **MongoDB Atlas** als Datenbank.
-- Verbindung erfolgt über `pymongo` mit einem `mongodb+srv://`-String.
-- Benötigte Libraries:
-  - pymongo
-  - dnspython
-
-**Start der Anwendung (Beispiel):**
- - Hauptmöglichkeit die Datein zu öffnen 
+# Start der Anwendung:
 ```bash
-python -m src.ui.<datei>
+python run_gui.py
